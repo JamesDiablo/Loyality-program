@@ -1,0 +1,49 @@
+{% extends 'template.html' %}
+{% block main_content %}
+<main class="container mt-5">
+    <div class="row">
+        <nav class="col-sm-3 p-3 mb-3 bg-light border border-primary">
+            <ul class="nav flex-column">
+                {% include 'navigation.html' %}
+            </ul>
+        </nav>
+        <div class="col-sm-9 p-3 mb-3 bg-light border border-primary">
+            <div class="content-block">
+                <div class="search-container">
+                    <form id="search" action="{% url 'basket' %}" method="get">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button id="search" class="btn btn-outline-primary position-absolute" type="submit">Search</button>
+                    </form>
+                </div>
+                {% if basket_cards %}
+                <table class="table table-hover">
+                    <thead class="thead-light">
+                        <tr class="text-center">
+                            <th>Серия</th>
+                            <th>Номер карты</th>
+                            <th>Дата выпуска</th>
+                            <th>Дата окончания</th>
+                            <th>Статус</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for basket_card in basket_cards %}
+                            <tr class="text-center" onclick="window.location.href='{% url 'card_info' series=basket_card.card.series number=basket_card.card.number %}'">
+                                <td>{{ basket_card.card.series }}</td>
+                                <td>{{ basket_card.card.number }}</td>
+                                <td>{{ basket_card.card.release_date|date:"Y-m-d H:i" }}</td>
+                                <td>{{ basket_card.card.expire_date|date:"Y-m-d H:i" }}</td>
+                                <td>{{ basket_card.card.status }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <p>Карты лояльности отсутствуют в корзине</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

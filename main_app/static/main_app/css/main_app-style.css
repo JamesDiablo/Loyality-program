@@ -1,0 +1,23 @@
+.header {
+    background-color: #7895b7!important; /* A light blue color */
+}
+
+.search-container form{
+    position: relative;
+}
+.search-container #search{
+    right: 0;
+    top: 0;
+}
+.table tr:hover {
+    cursor: pointer;
+} 
+.table th:hover { 
+    cursor:default;
+}
+@media(max-width:767px){
+    .table{
+        display: block;
+        overflow:scroll;
+    }
+}

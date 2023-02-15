@@ -1,0 +1,37 @@
+version: '3.9.7'
+
+services:
+  db_postgres:
+    image: postgres:15
+    container_name: db_postgres 
+    env_file:
+      - .env
+  web:
+    build: .
+    container_name: django_project 
+    volumes:
+      - .:/app
+      - ./data.json:/app/data.json
+    depends_on:
+      - db_postgres
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    command: >
+      bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py loaddata /app/data.json && python manage.py runserver 0.0.0.0:8000 --insecure"
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq 
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+  celery:
+    build: .
+    container_name: celery 
+    command: celery -A cards worker -l info -B
+    volumes:
+      - .:/app
+    depends_on:
+      - rabbitmq
+      - db_postgres
