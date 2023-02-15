@@ -39,7 +39,7 @@
 ```
 Например:
 ```bash
-> cd C:\Users\Administrator\Desktop\cards
+> cd C:\Users\Administrator\Desktop\Loyality-program
 ```
 3. Собрать образы docker, затем запустить их
 ```
@@ -72,7 +72,7 @@ $ git clone https://github.com/JamesDiablo/Loyality-program.git
 ```
 4. В файле settings.py измените  ALLOWED_HOSTS = ['127.0.0.1'] на IP адрес вашей VPS. Для этого:
 ```bash
-$ cd cards/cards
+$ cd Loyality-program/cards
 $ nano settings.py
 ```
 5. Вернитесь на один каталог назад, соберите образы docker и загрузите их
